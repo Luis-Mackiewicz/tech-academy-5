@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+body {
+  @apply bg-teal-50; /* Exemplo de cor escura */
+}
