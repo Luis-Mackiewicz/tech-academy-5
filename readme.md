@@ -1,4 +1,4 @@
-# 📌 TaskFlow
+# 📌 Taskflow
 
 TaskFlow é um site de **gerenciamento de projetos** que utiliza a metodologia **Kanban** para organizar tarefas de forma eficiente. Além disso, conta com um **sistema de grupos**, permitindo que equipes colaborem e acompanhem o progresso dos projetos em tempo real.
 
