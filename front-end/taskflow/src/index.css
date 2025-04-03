@@ -1,5 +1,5 @@
 @import "tailwindcss";
 
 body {
-  @apply bg-teal-50; /* Exemplo de cor escura */
+  @apply bg-[#F4FBFA];
 }
