@@ -1,6 +1,6 @@
+
 generator client {
   provider = "prisma-client-js"
-  output   = "./node_modules/.prisma/client"
 }
 
 datasource db {
@@ -8,12 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 enum Role {
   LEADER
   ADMIN
   MEMBER
-  
-  
 }
 
 enum TaskStatus {
@@ -23,17 +22,16 @@ enum TaskStatus {
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
-  name        String
-  email       String       @unique
-  password    String       @db.VarChar(255)
-  cpf         String       @unique
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  // Relacionamentos
-  memberships Membership[]
-  projects    Project[]    @relation("createdProjects")
-  assignedTasks Task[]     @relation("assignedTasks") // ← Adicionado para relação com Task
+  id            Int          @id @default(autoincrement())
+  name          String
+  email         String       @unique
+  password      String       @db.VarChar(255)
+  cpf           String       @unique
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  memberships   Membership[]
+  projects      Project[]    @relation("createdProjects")
+  assignedTasks Task[]       @relation("assignedTasks")
 }
 
 model Project {
@@ -43,7 +41,6 @@ model Project {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   createdBy   Int
-  // Relacionamentos
   creator     User         @relation("createdProjects", fields: [createdBy], references: [id])
   tasks       Task[]
   members     Membership[]
@@ -54,9 +51,9 @@ model Membership {
   role      Role     @default(MEMBER)
   userId    Int
   projectId Int
-  // Relacionamentos
   user      User     @relation(fields: [userId], references: [id])
   project   Project  @relation(fields: [projectId], references: [id])
+
   @@unique([userId, projectId])
 }
 
@@ -68,7 +65,6 @@ model Task {
   dueDate     DateTime?
   projectId   Int
   assignedTo  Int?
-  // Relacionamentos
   project     Project     @relation(fields: [projectId], references: [id])
   assignee    User?       @relation("assignedTasks", fields: [assignedTo], references: [id])
   createdAt   DateTime    @default(now())

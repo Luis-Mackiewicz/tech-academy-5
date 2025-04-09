@@ -1,5 +1,16 @@
+/*
+  Warnings:
+
+  - A unique constraint covering the columns `[cpf]` on the table `User` will be added. If there are existing duplicate values, this will fail.
+  - Added the required column `cpf` to the `User` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `updatedAt` to the `User` table without a default value. This is not possible if the table is not empty.
+
+*/
 -- AlterTable
-ALTER TABLE `user` MODIFY `password` VARCHAR(255) NOT NULL;
+ALTER TABLE `user` ADD COLUMN `cpf` VARCHAR(191) NOT NULL,
+    ADD COLUMN `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    ADD COLUMN `updatedAt` DATETIME(3) NOT NULL,
+    MODIFY `password` VARCHAR(255) NOT NULL;
 
 -- CreateTable
 CREATE TABLE `Project` (
@@ -38,6 +49,9 @@ CREATE TABLE `Task` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateIndex
+CREATE UNIQUE INDEX `User_cpf_key` ON `User`(`cpf`);
 
 -- AddForeignKey
 ALTER TABLE `Project` ADD CONSTRAINT `Project_createdBy_fkey` FOREIGN KEY (`createdBy`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
