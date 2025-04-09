@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,65 +7,70 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model membership {
+  id        Int             @id @default(autoincrement())
+  role      membership_role @default(MEMBER)
+  userId    Int
+  projectId Int
+  project   project         @relation(fields: [projectId], references: [id], map: "Membership_projectId_fkey")
+  user      user            @relation(fields: [userId], references: [id], map: "Membership_userId_fkey")
 
-enum Role {
+  @@unique([userId, projectId], map: "Membership_userId_projectId_key")
+  @@index([projectId], map: "Membership_projectId_fkey")
+}
+
+model project {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime
+  createdBy   Int
+  membership  membership[]
+  user        user         @relation(fields: [createdBy], references: [id], map: "Project_createdBy_fkey")
+  task        task[]
+
+  @@index([createdBy], map: "Project_createdBy_fkey")
+}
+
+model task {
+  id          Int         @id @default(autoincrement())
+  title       String
+  description String?
+  status      task_status @default(TODO)
+  dueDate     DateTime?
+  projectId   Int
+  assignedTo  Int?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime
+  user        user?       @relation(fields: [assignedTo], references: [id], map: "Task_assignedTo_fkey")
+  project     project     @relation(fields: [projectId], references: [id], map: "Task_projectId_fkey")
+
+  @@index([assignedTo], map: "Task_assignedTo_fkey")
+  @@index([projectId], map: "Task_projectId_fkey")
+}
+
+model user {
+  id         Int          @id @default(autoincrement())
+  name       String
+  email      String       @unique(map: "User_email_key")
+  password   String       @db.VarChar(255)
+  cpf        String       @unique(map: "User_cpf_key")
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime
+  membership membership[]
+  project    project[]
+  task       task[]
+}
+
+enum membership_role {
   LEADER
   ADMIN
   MEMBER
 }
 
-enum TaskStatus {
+enum task_status {
   TODO
   DOING
   DONE
-}
-
-model User {
-  id            Int          @id @default(autoincrement())
-  name          String
-  email         String       @unique
-  password      String       @db.VarChar(255)
-  cpf           String       @unique
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  memberships   Membership[]
-  projects      Project[]    @relation("createdProjects")
-  assignedTasks Task[]       @relation("assignedTasks")
-}
-
-model Project {
-  id          Int          @id @default(autoincrement())
-  name        String
-  description String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  createdBy   Int
-  creator     User         @relation("createdProjects", fields: [createdBy], references: [id])
-  tasks       Task[]
-  members     Membership[]
-}
-
-model Membership {
-  id        Int      @id @default(autoincrement())
-  role      Role     @default(MEMBER)
-  userId    Int
-  projectId Int
-  user      User     @relation(fields: [userId], references: [id])
-  project   Project  @relation(fields: [projectId], references: [id])
-
-  @@unique([userId, projectId])
-}
-
-model Task {
-  id          Int         @id @default(autoincrement())
-  title       String
-  description String?
-  status      TaskStatus  @default(TODO)
-  dueDate     DateTime?
-  projectId   Int
-  assignedTo  Int?
-  project     Project     @relation(fields: [projectId], references: [id])
-  assignee    User?       @relation("assignedTasks", fields: [assignedTo], references: [id])
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
 }
