@@ -1,4 +1,3 @@
-// src/entities/User.ts
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,7 +6,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { IsEmail, Length, Matches } from "class-validator";
 import { Membership } from "./Membership";
 import { Project } from "./Project";
 import { Task } from "./Task";
@@ -18,19 +16,15 @@ export class User {
   id: number;
 
   @Column()
-  @Length(2, 100)
   name: string;
 
   @Column({ unique: true })
-  @IsEmail()
   email: string;
 
   @Column()
-  @Length(8, 255)
   password: string;
 
   @Column({ unique: true })
-  @Length(11, 11)
   cpf: string;
 
   @CreateDateColumn()
@@ -42,9 +36,9 @@ export class User {
   @OneToMany(() => Membership, (membership) => membership.user)
   memberships: Membership[];
 
-  @OneToMany(() => Project, (project) => project.user)
+  @OneToMany(() => Project, (project) => project.creator)
   projects: Project[];
 
-  @OneToMany(() => Task, (task) => task.user)
+  @OneToMany(() => Task, (task) => task.assignedTo)
   tasks: Task[];
 }

@@ -1,24 +1,27 @@
 import { AppDataSource } from "../data-source";
 import { Project } from "../entities/Project";
+import { User } from "../entities/User";
 import { Repository } from "typeorm";
 
 class ProjectService {
   private projectRepository: Repository<Project>;
+  private userRepository: Repository<User>;
 
   constructor() {
     this.projectRepository = AppDataSource.getRepository(Project);
+    this.userRepository = AppDataSource.getRepository(User);
   }
 
   async getAllProjects(): Promise<Project[]> {
     return await this.projectRepository.find({
-      relations: ["user", "memberships", "tasks"],
+      relations: ["creator", "memberships", "tasks"],
     });
   }
 
   async getProjectById(id: number): Promise<Project | null> {
     const project = await this.projectRepository.findOne({
       where: { id },
-      relations: ["user", "memberships", "tasks"],
+      relations: ["creator", "memberships", "tasks"],
     });
 
     if (!project) {
@@ -31,12 +34,18 @@ class ProjectService {
   async createProject(
     name: string,
     description: string,
-    createdBy: number
+    userId: number
   ): Promise<Project> {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
     const project = this.projectRepository.create({
       name,
       description,
-      createdBy,
+      creator: user,
     });
 
     return await this.projectRepository.save(project);
@@ -54,7 +63,7 @@ class ProjectService {
       throw new Error("Project not found");
     }
 
-    if (project.createdBy !== userId) {
+    if (project.creator.id !== userId) {
       throw new Error("You are not authorized to update this project");
     }
 
@@ -71,7 +80,7 @@ class ProjectService {
       throw new Error("Project not found");
     }
 
-    if (project.createdBy !== userId) {
+    if (project.creator.id !== userId) {
       throw new Error("You are not authorized to delete this project");
     }
 
