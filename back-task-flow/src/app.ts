@@ -13,7 +13,6 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -24,7 +23,6 @@ app.use("/memberships", membershipRoutes);
 app.use("/projects", projectRoutes);
 app.use("/tasks", taskRoutes);
 
-// Middleware de erro global
 app.use(
   (
     err: any,

@@ -39,23 +39,17 @@ export const registerUser = async (data: RegisterData) => {
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
-  const newUser = userRepository.create({
+  const user = userRepository.create({
     name,
     email,
-    cpf,
     password: hashedPassword,
+    cpf,
   });
 
-  await userRepository.save(newUser);
-
-  return {
-    id: newUser.id,
-    name: newUser.name,
-    email: newUser.email,
-  };
+  return await userRepository.save(user);
 };
 
-export const loginUser = async (data: LoginData) => {
+export const loginUser = async (data: LoginData): Promise<string> => {
   const { email, password } = data;
 
   const userRepository = AppDataSource.getRepository(User);
@@ -72,5 +66,5 @@ export const loginUser = async (data: LoginData) => {
 
   const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: "1d" });
 
-  return { token };
+  return token;
 };
