@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "types": ["node", "express"],
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
