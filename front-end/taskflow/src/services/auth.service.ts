@@ -1,3 +1,26 @@
+// Adicione esta interface no auth.service.ts
+interface RegisterData {
+  name: string;
+  email: string;
+  password: string;
+  cpf: string;
+}
+
+export const register = async ({
+  name,
+  email,
+  password,
+  cpf,
+}: RegisterData) => {
+  const response = await api.post("/auth/register", {
+    name,
+    email,
+    password,
+    cpf,
+  });
+  return response.data;
+};
+
 import api from "./api";
 import { jwtDecode } from "jwt-decode";
 
