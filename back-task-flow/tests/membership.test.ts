@@ -11,7 +11,6 @@ let membershipId: number;
 beforeAll(async () => {
   await AppDataSource.initialize();
 
-  // Cria um usuário para autenticação
   const userRepository = AppDataSource.getRepository(User);
   const user = userRepository.create({
     name: "Test User",
@@ -21,14 +20,12 @@ beforeAll(async () => {
   });
   await userRepository.save(user);
 
-  // Faz login para obter o token JWT
   const response = await request(app).post("/auth/login").send({
     email: "testuser@example.com",
     password: "password123",
   });
   token = response.body.token;
 
-  // Cria um projeto para os testes
   const projectResponse = await request(app)
     .post("/projects")
     .set("Authorization", `Bearer ${token}`)
@@ -49,7 +46,7 @@ describe("Membership Module", () => {
       .post("/memberships")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        userId: 1, // ID do usuário criado no setup
+        userId: 1,
         projectId,
         role: "MEMBER",
       });

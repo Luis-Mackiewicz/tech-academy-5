@@ -39,13 +39,11 @@ class MembershipService {
     projectId: number,
     role: MembershipRole
   ): Promise<Membership> {
-    // Verifica se o usuário existe
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
       throw new Error("User not found");
     }
 
-    // Verifica se o projeto existe
     const project = await this.projectRepository.findOne({
       where: { id: projectId },
     });
@@ -53,7 +51,6 @@ class MembershipService {
       throw new Error("Project not found");
     }
 
-    // Cria a associação
     const membership = this.membershipRepository.create({
       userId,
       projectId,

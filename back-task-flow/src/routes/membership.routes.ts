@@ -4,7 +4,6 @@ import { authenticateToken } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-// Rotas protegidas pelo middleware de autenticação
 router.get("/", authenticateToken, membershipController.getAllMemberships);
 router.get("/:id", authenticateToken, membershipController.getMembershipById);
 router.post("/", authenticateToken, membershipController.createMembership);
