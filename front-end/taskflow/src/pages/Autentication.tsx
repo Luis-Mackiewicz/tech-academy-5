@@ -197,9 +197,9 @@ const RegisterFields = ({
       <Input id="name" placeholder="Digite seu nome" {...register("name")} />
       {errors.name ? (
         <p className="text-red-500 text-sm">{errors.name.message}</p>
-      ) : (
-        watch("name") && <p className="text-green-500 text-sm">Nome válido</p>
-      )}
+      ) : watch("name") ? (
+        <p className="text-green-500 text-sm">Nome válido</p>
+      ) : null}
     </div>
     <div>
       <Label htmlFor="email">Email</Label>
@@ -211,18 +211,18 @@ const RegisterFields = ({
       />
       {errors.email ? (
         <p className="text-red-500 text-sm">{errors.email.message}</p>
-      ) : (
-        watch("email") && <p className="text-green-500 text-sm">Email válido</p>
-      )}
+      ) : watch("email") ? (
+        <p className="text-green-500 text-sm">Email válido</p>
+      ) : null}
     </div>
     <div>
       <Label htmlFor="cpf">CPF</Label>
       <Input id="cpf" placeholder="Digite seu CPF" {...register("cpf")} />
       {errors.cpf ? (
         <p className="text-red-500 text-sm">{errors.cpf.message}</p>
-      ) : (
-        watch("cpf") && <p className="text-green-500 text-sm">CPF válido</p>
-      )}
+      ) : watch("cpf") ? (
+        <p className="text-green-500 text-sm">CPF válido</p>
+      ) : null}
     </div>
     <div>
       <Label htmlFor="password">Senha</Label>
@@ -234,11 +234,9 @@ const RegisterFields = ({
       />
       {errors.password ? (
         <p className="text-red-500 text-sm">{errors.password.message}</p>
-      ) : (
-        watch("password") && (
-          <p className="text-green-500 text-sm">Senha válida</p>
-        )
-      )}
+      ) : watch("password") ? (
+        <p className="text-green-500 text-sm">Senha válida</p>
+      ) : null}
     </div>
   </>
 );
@@ -263,9 +261,9 @@ const LoginFields = ({
       />
       {errors.email ? (
         <p className="text-red-500 text-sm">{errors.email.message}</p>
-      ) : (
-        watch("email") && <p className="text-green-500 text-sm">Email válido</p>
-      )}
+      ) : watch("email") ? (
+        <p className="text-green-500 text-sm">Email válido</p>
+      ) : null}
     </div>
     <div>
       <Label htmlFor="password">Senha</Label>
@@ -277,11 +275,9 @@ const LoginFields = ({
       />
       {errors.password ? (
         <p className="text-red-500 text-sm">{errors.password.message}</p>
-      ) : (
-        watch("password") && (
-          <p className="text-green-500 text-sm">Senha válida</p>
-        )
-      )}
+      ) : watch("password") ? (
+        <p className="text-green-500 text-sm">Senha válida</p>
+      ) : null}
     </div>
   </>
 );
