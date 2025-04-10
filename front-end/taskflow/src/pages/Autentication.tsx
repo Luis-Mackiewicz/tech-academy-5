@@ -77,7 +77,7 @@ function Authentication() {
     try {
       await api.post("/auth/register", data);
       alert("Usuário registrado com sucesso!");
-      setActiveForm("login");
+      navigate("/"); // Redireciona para a home
     } catch (error) {
       handleApiError(error);
     }
@@ -89,7 +89,7 @@ function Authentication() {
       const response = await api.post("/auth/login", data);
       localStorage.setItem("token", response.data.token);
       alert("Login realizado com sucesso!");
-      navigate("/profile");
+      navigate("/"); // Redireciona para a home
     } catch (error) {
       handleApiError(error);
     }
