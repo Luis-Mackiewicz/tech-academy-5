@@ -111,4 +111,13 @@ describe("Auth Routes", () => {
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message", "Token inválido");
   });
+
+  it("should not access a protected route with a malformed token", async () => {
+    const response = await request(app)
+      .get("/users")
+      .set("Authorization", "Bearer malformed-token");
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("message", "Token inválido");
+  });
 });

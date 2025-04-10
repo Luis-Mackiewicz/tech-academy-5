@@ -1,5 +1,11 @@
+/* filepath: c:\task-flow\front-end\taskflow\src\index.css */
 @import "tailwindcss";
 
+html,
 body {
   @apply bg-[#F4FBFA];
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
 }

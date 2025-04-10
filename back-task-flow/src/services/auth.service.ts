@@ -55,7 +55,7 @@ export const registerUser = async (data: RegisterData) => {
   };
 };
 
-export const loginUser = async (data: LoginData) => {
+export const loginUser = async (data: LoginData): Promise<string> => {
   const { email, password } = data;
 
   const userRepository = AppDataSource.getRepository(User);
@@ -72,5 +72,5 @@ export const loginUser = async (data: LoginData) => {
 
   const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: "1d" });
 
-  return { token };
+  return token;
 };
