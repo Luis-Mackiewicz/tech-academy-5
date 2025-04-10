@@ -1,4 +1,3 @@
-// src/entities/Project.ts
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -29,11 +28,8 @@ export class Project {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
-  createdBy: number;
-
-  @ManyToOne(() => User, (user) => user.projects)
-  user: User;
+  @ManyToOne(() => User, (user) => user.projects, { eager: true })
+  creator: User;
 
   @OneToMany(() => Membership, (membership) => membership.project)
   memberships: Membership[];

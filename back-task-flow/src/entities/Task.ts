@@ -1,3 +1,4 @@
+// src/entities/Task.ts
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -33,11 +34,14 @@ export class Task {
   })
   status: TaskStatus;
 
-  @ManyToOne(() => Project, (project) => project.tasks)
+  @ManyToOne(() => Project, (project) => project.tasks, { onDelete: "CASCADE" })
   project: Project;
 
-  @ManyToOne(() => User, (user) => user.tasks)
-  user: User;
+  @ManyToOne(() => User, (user) => user.tasks, {
+    nullable: true,
+    onDelete: "SET NULL",
+  })
+  assignedTo: User;
 
   @CreateDateColumn()
   createdAt: Date;
