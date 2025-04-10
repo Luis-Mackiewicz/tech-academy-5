@@ -1,13 +1,17 @@
 import request from "supertest";
 import app from "../src/app";
-import prisma from "../src/prisma/client";
+import { AppDataSource } from "../src/data-source";
+import { User } from "../src/entities/User";
 
 beforeAll(async () => {
-  await prisma.user.deleteMany();
+  await AppDataSource.initialize();
+
+  const userRepository = AppDataSource.getRepository(User);
+  await userRepository.clear();
 });
 
 afterAll(async () => {
-  await prisma.$disconnect();
+  await AppDataSource.destroy();
 });
 
 describe("Auth Routes", () => {
