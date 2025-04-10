@@ -3,6 +3,8 @@ import app from "../src/app";
 import { AppDataSource } from "../src/data-source";
 import { User } from "../src/entities/User";
 import { Project } from "../src/entities/Project";
+import { Task } from "../src/entities/Task";
+import bcrypt from "bcrypt";
 
 let token: string;
 let projectId: number;
@@ -11,18 +13,26 @@ let taskId: number;
 beforeAll(async () => {
   await AppDataSource.initialize();
 
+  const taskRepository = AppDataSource.getRepository(Task);
+  const projectRepository = AppDataSource.getRepository(Project);
   const userRepository = AppDataSource.getRepository(User);
+
+  await taskRepository.delete({});
+  await projectRepository.delete({});
+  await userRepository.delete({});
+
+  const hashedPassword = await bcrypt.hash("senha5000", 10);
   const user = userRepository.create({
-    name: "Test User",
-    email: "testuser@example.com",
-    password: "password123",
+    name: "coronel66",
+    email: "coronel66@gmail.com",
+    password: hashedPassword,
     cpf: "12345678901",
   });
   await userRepository.save(user);
 
   const response = await request(app).post("/auth/login").send({
-    email: "testuser@example.com",
-    password: "password123",
+    email: "coronel66@gmail.com",
+    password: "senha5000",
   });
   token = response.body.token;
 

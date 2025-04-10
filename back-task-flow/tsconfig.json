@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "typeRoots": ["./node_modules/@types", "./src/types"],
-    "types": ["node", "express"],
+    "types": ["node", "express", "jest"],
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",

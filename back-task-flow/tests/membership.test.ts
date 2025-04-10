@@ -3,26 +3,36 @@ import app from "../src/app";
 import { AppDataSource } from "../src/data-source";
 import { User } from "../src/entities/User";
 import { Project } from "../src/entities/Project";
+import { Membership } from "../src/entities/Membership";
 
 let token: string;
+let userId: number;
 let projectId: number;
 let membershipId: number;
 
 beforeAll(async () => {
   await AppDataSource.initialize();
 
+  const membershipRepository = AppDataSource.getRepository(Membership);
+  const projectRepository = AppDataSource.getRepository(Project);
   const userRepository = AppDataSource.getRepository(User);
+
+  await membershipRepository.delete({});
+  await projectRepository.delete({});
+  await userRepository.delete({});
+
   const user = userRepository.create({
-    name: "Test User",
-    email: "testuser@example.com",
-    password: "password123",
-    cpf: "12345678901",
+    name: "Luis Mackiewivz",
+    email: "testusertest@aqui.com",
+    password: "feijaoComArroz",
+    cpf: "12345619201",
   });
-  await userRepository.save(user);
+  const savedUser = await userRepository.save(user);
+  userId = savedUser.id;
 
   const response = await request(app).post("/auth/login").send({
-    email: "testuser@example.com",
-    password: "password123",
+    email: "testusertest@aqui.com",
+    password: "feijaoComArroz",
   });
   token = response.body.token;
 
@@ -46,7 +56,7 @@ describe("Membership Module", () => {
       .post("/memberships")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        userId: 1,
+        userId,
         projectId,
         role: "MEMBER",
       });

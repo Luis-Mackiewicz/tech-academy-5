@@ -5,22 +5,28 @@ import { Project } from "../src/entities/Project";
 import { User } from "../src/entities/User";
 
 let token: string;
+let projectId: number;
 
 beforeAll(async () => {
   await AppDataSource.initialize();
 
+  const projectRepository = AppDataSource.getRepository(Project);
   const userRepository = AppDataSource.getRepository(User);
+
+  await projectRepository.delete({});
+  await userRepository.delete({});
+
   const user = userRepository.create({
-    name: "Test User",
-    email: "testuser@example.com",
-    password: "password123",
+    name: "Aqui meu nome",
+    email: "testtest@gmail.com",
+    password: "password32897",
     cpf: "12345678901",
   });
   await userRepository.save(user);
 
   const response = await request(app).post("/auth/login").send({
-    email: "testuser@example.com",
-    password: "password123",
+    email: "testtest@gmail.com",
+    password: "password32897",
   });
   token = response.body.token;
 });
@@ -30,8 +36,6 @@ afterAll(async () => {
 });
 
 describe("Project Module", () => {
-  let projectId: number;
-
   it("should create a new project", async () => {
     const response = await request(app)
       .post("/projects")
