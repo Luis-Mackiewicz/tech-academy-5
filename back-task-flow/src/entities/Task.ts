@@ -11,7 +11,7 @@ import { User } from "./User";
 
 export enum TaskStatus {
   TODO = "TODO",
-  DOING = "DOING",
+  IN_PROGRESS = "IN_PROGRESS",
   DONE = "DONE",
 }
 
@@ -33,24 +33,18 @@ export class Task {
   })
   status: TaskStatus;
 
-  @Column({ type: "date", nullable: true })
-  dueDate: Date;
+  @ManyToOne(() => Project, (project) => project.tasks, { onDelete: "CASCADE" })
+  project: Project;
+
+  @ManyToOne(() => User, (user) => user.tasks, {
+    nullable: true,
+    onDelete: "SET NULL",
+  })
+  assignedTo: User;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @Column({ type: "int" })
-  projectId: number;
-
-  @Column({ type: "int", nullable: true })
-  assignedTo: number;
-
-  @ManyToOne(() => Project, (project) => project.tasks)
-  project: Project;
-
-  @ManyToOne(() => User, (user) => user.tasks)
-  user: User;
 }

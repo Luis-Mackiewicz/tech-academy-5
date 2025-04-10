@@ -1,10 +1,13 @@
 import { Router } from "express";
+import * as taskController from "../controllers/task.controller";
+import { authenticateToken } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-// Exemplo de rota de teste
-router.get("/", (req, res) => {
-  res.json({ message: "Task routes working!" });
-});
+router.get("/", authenticateToken, taskController.getAllTasks);
+router.get("/:id", authenticateToken, taskController.getTaskById);
+router.post("/", authenticateToken, taskController.createTask);
+router.put("/:id", authenticateToken, taskController.updateTask);
+router.delete("/:id", authenticateToken, taskController.deleteTask);
 
 export default router;

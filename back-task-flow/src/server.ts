@@ -6,12 +6,12 @@ const PORT = process.env.PORT || 3333;
 
 AppDataSource.initialize()
   .then(() => {
-    console.log("Data Source has been initialized!");
+    console.log("Conexão com o banco de dados estabelecida com sucesso!");
 
     app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
+      console.log(`Servidor rodando em http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
-    console.error("Error during Data Source initialization:", err);
+    console.error("Erro ao inicializar o Data Source:", err);
   });
