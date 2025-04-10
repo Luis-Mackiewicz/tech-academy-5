@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import ProfileButton from "./ProfileButton";
+import ProfileButton from "../components/ui/ProfieButton";
 
 function Header() {
   const location = useLocation();

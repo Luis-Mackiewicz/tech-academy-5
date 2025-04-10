@@ -5,42 +5,88 @@ import About from "./pages/About";
 import CreateProject from "./pages/CreateProject";
 import Home from "./pages/Home";
 import Kanban from "./pages/Kanban";
-import Login from "./pages/Login";
+import Autentication from "./pages/Autentication";
 import Members from "./pages/Members";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import Projects from "./pages/Projects";
 import Settings from "./pages/Settings";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        {/* Rotas públicas */}
-        <Route path="/login" element={<Login />} />
+    <>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {/* Todas as rotas usam o Layout */}
+          <Route element={<Layout />}>
+            {/* Rotas públicas */}
+            <Route path="/authentication" element={<Autentication />} />
+            <Route path="/about" element={<About />} />
 
-        {/* Rotas com layout comum (usando Layout com Outlet) */}
-        <Route element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/profile" element={<Profile />} />
+            {/* Rotas protegidas */}
+            <Route index element={<Home />} />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/projects"
+              element={
+                <PrivateRoute>
+                  <Projects />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <Settings />
+                </PrivateRoute>
+              }
+            />
 
-          {/* Rotas aninhadas para projetos */}
-          <Route path="/projects">
-            <Route path="create" element={<CreateProject />} />
-            <Route path=":id/kanban" element={<Kanban />} />
-            <Route path=":id/members" element={<Members />} />
+            {/* Rotas aninhadas protegidas */}
+            <Route path="/projects">
+              <Route
+                path="create"
+                element={
+                  <PrivateRoute>
+                    <CreateProject />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path=":id/kanban"
+                element={
+                  <PrivateRoute>
+                    <Kanban />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path=":id/members"
+                element={
+                  <PrivateRoute>
+                    <Members />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
+
+            {/* Rota de fallback */}
+            <Route path="*" element={<NotFound />} />
           </Route>
-        </Route>
-
-        {/* Rota de fallback */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </AnimatePresence>
+        </Routes>
+      </AnimatePresence>
+    </>
   );
 }
 

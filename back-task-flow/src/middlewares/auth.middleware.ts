@@ -36,3 +36,7 @@ export const authenticateToken = (
     res.status(401).json({ message: "Token inválido" });
   }
 };
+
+export const checkAuth = (req: Request, res: Response) => {
+  res.status(200).json({ authenticated: true });
+};
