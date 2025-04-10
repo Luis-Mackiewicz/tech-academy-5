@@ -5,7 +5,7 @@ function Header() {
   const location = useLocation();
 
   return (
-    <header className="bg-[#004345] h-[8vh] w-[90vw] mt-[4vh] mx-auto md:px-8 flex items-center">
+    <header className="bg-[#004345] h-[8vh] w-[100vw]  mx-auto md:px-8 flex items-center">
       <nav className="w-full flex items-center justify-between">
         <div className="flex items-center">
           <div className="mr-8">

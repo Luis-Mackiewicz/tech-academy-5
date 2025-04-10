@@ -3,13 +3,13 @@ import Header from "./Header";
 
 function Layout() {
   return (
-    <div className="layout">
+    <div className="min-h-screen flex flex-col bg-[#F4FBFA]">
       <Header />
-      <div className="content-container">
-        <main className="main-content">
-          <Outlet />
-        </main>
-      </div>
+      <main className="flex-grow pt-[12vh]">
+        {" "}
+        {/* 8vh (altura do Header) + 4vh (margem superior) */}
+        <Outlet />
+      </main>
     </div>
   );
 }

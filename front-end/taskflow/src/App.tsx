@@ -20,14 +20,12 @@ function App() {
     <>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
-          {/* Todas as rotas usam o Layout */}
+          {/* Rotas que USAM o Layout */}
           <Route element={<Layout />}>
-            {/* Rotas públicas */}
-            <Route path="/authentication" element={<Autentication />} />
+            {/* Rotas públicas dentro do Layout */}
+            <Route path="/" element={<Home />} />{" "}
+            {/* Home agora dentro do Layout */}
             <Route path="/about" element={<About />} />
-
-            {/* Rotas protegidas */}
-            <Route index element={<Home />} />
             <Route
               path="/profile"
               element={
@@ -52,8 +50,7 @@ function App() {
                 </PrivateRoute>
               }
             />
-
-            {/* Rotas aninhadas protegidas */}
+            {/* Rotas aninhadas protegidas DENTRO do Layout */}
             <Route path="/projects">
               <Route
                 path="create"
@@ -80,10 +77,12 @@ function App() {
                 }
               />
             </Route>
-
-            {/* Rota de fallback */}
-            <Route path="*" element={<NotFound />} />
           </Route>
+          {/* Rotas que NÃO USAM o Layout */}
+          <Route path="/authentication" element={<Autentication />} />
+          <Route path="/not-found" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />{" "}
+          {/* Mantenha o fallback fora do Layout */}
         </Routes>
       </AnimatePresence>
     </>
