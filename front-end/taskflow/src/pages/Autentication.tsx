@@ -75,9 +75,15 @@ function Authentication() {
   // Função para registrar usuário
   const handleRegister: SubmitHandler<RegisterData> = async (data) => {
     try {
-      await api.post("/auth/register", data);
+      const response = await api.post("/auth/register", data);
+      const user = response.data.user;
+
+      // Salva os dados do usuário no localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", response.data.token);
+
       alert("Usuário registrado com sucesso!");
-      navigate("/"); // Redireciona para a home
+      navigate("/profile"); // Redireciona para o perfil
     } catch (error) {
       handleApiError(error);
     }
@@ -87,9 +93,18 @@ function Authentication() {
   const handleLogin: SubmitHandler<LoginData> = async (data) => {
     try {
       const response = await api.post("/auth/login", data);
+      const user = response.data.user;
+
+      console.log("Resposta da API:", response.data); // Verifica a resposta da API
+
+      // Salva os dados do usuário no localStorage
+      localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", response.data.token);
+
+      console.log("Usuário salvo no localStorage:", user); // Verifica o que foi salvo
+
       alert("Login realizado com sucesso!");
-      navigate("/"); // Redireciona para a home
+      navigate("/profile"); // Redireciona para o perfil
     } catch (error) {
       handleApiError(error);
     }
@@ -105,7 +120,7 @@ function Authentication() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
+    <div className="flex justify-center items-center min-h-screen">
       <Card className="w-[400px] h-auto flex flex-col justify-between">
         <div>
           <Header activeForm={activeForm} setActiveForm={setActiveForm} />
