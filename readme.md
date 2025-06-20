@@ -22,7 +22,7 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 ##  Desenvolvimento
 
-Este projeto foi desenvolvido no **3º período do curso de Tecnologia em Análise e Desenvolvimento de Sistemas (TADS).
+Este projeto foi desenvolvido no 3º período do curso de Tecnologia em Análise e Desenvolvimento de Sistemas (TADS).
 ---
 
 ## Link para o repositório back-end: [https://github.com/Luis-Mackiewicz/api-tech-academy-5](https://github.com/Luis-Mackiewicz/api-tech-academy-5).
