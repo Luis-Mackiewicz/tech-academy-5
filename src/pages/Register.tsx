@@ -23,12 +23,9 @@ export default function Register() {
           <CardHeader>
             <CardTitle>Registrar</CardTitle>
             <CardAction>
-              <Button
-                onClick={goToLogin}
-                className="cursor-pointer bg-sky-700 hover:bg-green-400"
-              >
+              <p onClick={goToLogin} className="cursor-pointer opacity-60">
                 <strong>Login</strong>
-              </Button>
+              </p>
             </CardAction>
             <CardContent>
               <form action="">
