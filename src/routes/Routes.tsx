@@ -5,6 +5,7 @@ import NotFound from "@/pages/NotFound";
 import Register from "@/pages/Register";
 import Home from "@/pages/Home";
 import Tutorial from "@/pages/Tutorial";
+import Projects from "@/pages/Projects";
 // import Register from "@/pages/Register";
 
 export const router = createBrowserRouter([
@@ -15,7 +16,6 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Login />,
-        errorElement: <NotFound />,
       },
       {
         path: "register",
@@ -28,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: "tutorial",
         element: <Tutorial />,
+      },
+      {
+        path: "projects",
+        element: <Projects />,
       },
     ],
   },
