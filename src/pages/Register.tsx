@@ -19,7 +19,7 @@ export default function Register() {
   return (
     <>
       <div className="bg-gradient-to-t from-sky-400  to-sky-700 h-screen w-screen flex justify-center items-center">
-        <Card className="h-[80vh] w-[50vw] shadow-2xl border-black bg-white">
+        <Card className="h-[60vh] w-[30vw] shadow-2xl border-black bg-white">
           <CardHeader>
             <CardTitle>Registrar</CardTitle>
             <CardAction>
@@ -27,21 +27,22 @@ export default function Register() {
                 <strong>Login</strong>
               </p>
             </CardAction>
-            <CardContent>
-              <form action="">
-                <fieldset>
-                  <Input placeholder="Digite seu nome" type="text" />
-                  <Input placeholder="Digite seu email" type="email" />
-                  <Input placeholder="Digite sua senha" type="password" />
-                  <Input placeholder="Digite seu CPF" type="text" />
-                  <Button className="bg-sky-700  w-[100%] cursor-pointer hover:bg-green-400">
-                    Registrar
-                  </Button>
-                </fieldset>
-              </form>
-            </CardContent>
-            <CardFooter></CardFooter>
           </CardHeader>
+          <CardContent className="flex flex-1 items-center justify-center">
+            <form action="" className="w-full">
+              <fieldset className="flex flex-col items-center gap-4 w-full">
+                <legend className="font-bold">Preencha os campos:</legend>
+                <Input placeholder="Digite seu nome" type="text" />
+                <Input placeholder="Digite seu email" type="email" />
+                <Input placeholder="Digite sua senha" type="password" />
+                <Input placeholder="Digite seu CPF" type="text" />
+                <Button className="bg-sky-700  w-[100%] cursor-pointer hover:bg-green-400">
+                  Registrar
+                </Button>
+              </fieldset>
+            </form>
+          </CardContent>
+          <CardFooter></CardFooter>
         </Card>
       </div>
     </>
