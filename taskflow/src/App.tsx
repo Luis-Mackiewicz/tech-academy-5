@@ -1,1 +1,7 @@
-export default function App() {}
+export default function App() {
+  return (
+    <>
+      <p>aqui</p>
+    </>
+  );
+}
