@@ -6,6 +6,7 @@ import Register from "@/pages/Register";
 import Home from "@/pages/Home";
 import Tutorial from "@/pages/Tutorial";
 import Projects from "@/pages/Projects";
+import CreateNewProject from "@/pages/CreateNewProject";
 // import Register from "@/pages/Register";
 
 export const router = createBrowserRouter([
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "projects",
         element: <Projects />,
+      },
+      {
+        path: "create-new-project",
+        element: <CreateNewProject />,
       },
     ],
   },
