@@ -23,12 +23,12 @@ export default function Login() {
           <CardHeader>
             <CardTitle>Login</CardTitle>
             <CardAction>
-              <Button
+              <p
                 onClick={goToRegistration}
-                className="cursor-pointer bg-sky-700 hover:bg-green-400"
+                className="cursor-pointer opacity-60"
               >
                 <strong>Registrar</strong>
-              </Button>
+              </p>
             </CardAction>
             <CardContent>
               <form action="">
