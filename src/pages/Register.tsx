@@ -21,7 +21,7 @@ export default function Register() {
       <div className="bg-gradient-to-t from-sky-400  to-sky-700 h-screen w-screen flex justify-center items-center">
         <Card className="h-[60vh] w-[30vw] shadow-2xl border-black bg-white">
           <CardHeader>
-            <CardTitle>Registrar</CardTitle>
+            <CardTitle className="font-black text-sky-900">Registrar</CardTitle>
             <CardAction>
               <p onClick={goToLogin} className="cursor-pointer opacity-60">
                 <strong>Login</strong>
