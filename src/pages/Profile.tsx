@@ -10,22 +10,38 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+
+type ProfileForm = {
+  nome: string;
+  cpf: string;
+  senha: string;
+  confirmSenha: string;
+};
 
 export default function Profile() {
   const navigate = useNavigate();
-
-  const backPage = () => {
-    navigate(-1);
-  };
-
-  const [nome, setNome] = useState("Nome do Usuário");
-  const [email] = useState("usuario@email.com");
-  const [cpf, setCpf] = useState("123.456.789-00");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [senha, setSenha] = useState("");
-  const [confirmSenha, setConfirmSenha] = useState("");
   const [mensagem, setMensagem] = useState("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const email = "usuario@email.com";
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<ProfileForm>({
+    defaultValues: {
+      nome: "Nome do Usuário",
+      cpf: "123.456.789-00",
+      senha: "",
+      confirmSenha: "",
+    },
+  });
+
+  const nome = watch("nome");
 
   const dicebearURL = `https://api.dicebear.com/8.x/bottts/svg?seed=${encodeURIComponent(
     nome || "TaskFlowUser"
@@ -45,41 +61,22 @@ export default function Profile() {
     }
   };
 
-  function validarCPF(cpf: string) {
-    return /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(cpf);
-  }
-
-  function validarSenha(s: string) {
-    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(s);
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validarCPF(cpf)) {
-      setMensagem("CPF inválido.");
-      return;
-    }
-    if (!validarSenha(senha)) {
-      setMensagem(
-        "A senha deve ter pelo menos 8 caracteres e conter letras e números."
-      );
-      return;
-    }
-    if (senha !== confirmSenha) {
-      setMensagem("As senhas não coincidem.");
-      return;
-    }
+  const onSubmit = (data: ProfileForm) => {
     setMensagem("Perfil atualizado com sucesso!");
+  };
+
+  const backPage = () => {
+    navigate(-1);
   };
 
   return (
     <div className="bg-gradient-to-t from-sky-400 to-sky-700 h-screen w-screen flex justify-center items-center">
       <Card className="h-auto w-[90%] max-w-md p-6 shadow-2xl border border-gray-300 bg-white rounded-2xl">
         <CardHeader className="text-center mb-4 flex">
-          <CardTitle className="font-black text-3xl text-sky-900  order-2 ml-auto">
+          <CardTitle className="font-black text-3xl text-sky-900 order-2 ml-auto">
             Meu Perfil
           </CardTitle>
-          <CardAction className="order-1 ">
+          <CardAction className="order-1">
             <Button onClick={backPage} className="cursor-pointer">
               Voltar
             </Button>
@@ -87,7 +84,7 @@ export default function Profile() {
         </CardHeader>
 
         <CardContent>
-          <form className="w-full" onSubmit={handleSubmit}>
+          <form className="w-full" onSubmit={handleSubmit(onSubmit)} noValidate>
             <fieldset className="flex flex-col gap-4">
               <div className="w-full flex justify-center">
                 <img
@@ -115,14 +112,26 @@ export default function Profile() {
                 </label>
                 <Input
                   id="nome"
-                  name="nome"
                   placeholder="Digite seu nome"
                   type="text"
                   autoComplete="name"
-                  required
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
+                  {...register("nome", {
+                    required: "Nome é obrigatório",
+                    minLength: {
+                      value: 3,
+                      message: "Nome deve ter pelo menos 3 caracteres",
+                    },
+                    pattern: {
+                      value: /^[A-Za-zÀ-ÿ\s]+$/,
+                      message: "Nome deve conter apenas letras",
+                    },
+                  })}
                 />
+                {errors.nome && (
+                  <span className="text-xs text-red-500">
+                    {errors.nome.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-full">
@@ -134,7 +143,6 @@ export default function Profile() {
                 </label>
                 <Input
                   id="email"
-                  name="email"
                   type="email"
                   value={email}
                   disabled
@@ -154,14 +162,22 @@ export default function Profile() {
                 </label>
                 <Input
                   id="cpf"
-                  name="cpf"
                   placeholder="Digite seu CPF"
                   type="text"
                   autoComplete="off"
-                  required
-                  value={cpf}
-                  onChange={(e) => setCpf(e.target.value)}
+                  {...register("cpf", {
+                    required: "CPF é obrigatório",
+                    pattern: {
+                      value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
+                      message: "CPF deve estar no formato 000.000.000-00",
+                    },
+                  })}
                 />
+                {errors.cpf && (
+                  <span className="text-xs text-red-500">
+                    {errors.cpf.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-full">
@@ -173,14 +189,23 @@ export default function Profile() {
                 </label>
                 <Input
                   id="senha"
-                  name="senha"
                   placeholder="Digite sua nova senha"
                   type="password"
                   autoComplete="new-password"
-                  required
-                  value={senha}
-                  onChange={(e) => setSenha(e.target.value)}
+                  {...register("senha", {
+                    required: "Senha é obrigatória",
+                    pattern: {
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                      message:
+                        "A senha deve ter pelo menos 8 caracteres e conter letras e números.",
+                    },
+                  })}
                 />
+                {errors.senha && (
+                  <span className="text-xs text-red-500">
+                    {errors.senha.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-full">
@@ -192,18 +217,24 @@ export default function Profile() {
                 </label>
                 <Input
                   id="confirmSenha"
-                  name="confirmSenha"
                   placeholder="Confirme sua nova senha"
                   type="password"
                   autoComplete="new-password"
-                  required
-                  value={confirmSenha}
-                  onChange={(e) => setConfirmSenha(e.target.value)}
+                  {...register("confirmSenha", {
+                    required: "Confirmação de senha é obrigatória",
+                    validate: (value) =>
+                      value === watch("senha") || "As senhas não coincidem.",
+                  })}
                 />
+                {errors.confirmSenha && (
+                  <span className="text-xs text-red-500">
+                    {errors.confirmSenha.message}
+                  </span>
+                )}
               </div>
 
               {mensagem && (
-                <div className="text-center text-sm text-red-500">
+                <div className="text-center text-sm text-green-600">
                   {mensagem}
                 </div>
               )}
