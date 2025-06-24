@@ -44,7 +44,7 @@ export default function Projects() {
           </CardAction>
         </CardHeader>
         <CardContent></CardContent>
-        <CardFooter>
+        <CardFooter className=" flex self-end gap-4 mt-auto">
           <Button className="bg-sky-500 hover:bg-teal-500 cursor-pointer">
             <img src={arrowLeftIcon} alt="back" />
           </Button>
