@@ -18,22 +18,33 @@ export default function Login() {
 
   return (
     <div className="bg-gradient-to-t from-sky-400 to-sky-700 h-screen w-screen flex justify-center items-center">
-      <Card className="h-[60vh] w-[30vw] shadow-2xl border-black bg-white">
-        <CardHeader>
-          <CardTitle className="font-black text-sky-900">Login</CardTitle>
+      <Card className="h-auto w-[90%] max-w-md p-6 shadow-2xl border border-gray-300 bg-white rounded-2xl">
+        <CardHeader className="text-center mb-4">
+          <CardTitle className="font-black text-3xl text-sky-900 mr-auto">
+            Login
+          </CardTitle>
           <CardAction>
-            <p onClick={goToRegistration} className="cursor-pointer opacity-60">
-              <strong>Registrar</strong>
+            <p
+              onClick={goToRegistration}
+              className="cursor-pointer text-sm text-sky-600 hover:text-sky-800 transition-colors duration-200"
+            >
+              Não tem conta? <strong>Registrar</strong>
             </p>
           </CardAction>
         </CardHeader>
-        <CardContent className="flex flex-1 items-center justify-center">
-          <form action="" className="w-full">
-            <fieldset className="flex flex-col items-center gap-4 w-full">
-              <legend className="font-bold">Preencha os campos:</legend>
 
-              <div className="w-full px-4">
-                <label htmlFor="email" className="block font-semibold text-sm">
+        <CardContent>
+          <form action="" className="w-full">
+            <fieldset className="flex flex-col gap-4">
+              <legend className="font-semibold text-sky-800 mb-2">
+                Preencha os campos:
+              </legend>
+
+              <div className="w-full">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   E-mail
                 </label>
                 <Input
@@ -46,8 +57,11 @@ export default function Login() {
                 />
               </div>
 
-              <div className="w-full px-4">
-                <label htmlFor="senha" className="block font-semibold text-sm">
+              <div className="w-full">
+                <label
+                  htmlFor="senha"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Senha
                 </label>
                 <Input
@@ -60,18 +74,21 @@ export default function Login() {
                 />
               </div>
 
-              <div className="w-full px-4">
+              <div className="w-full">
                 <Button
-                  className="bg-sky-700 w-full cursor-pointer hover:bg-green-400"
                   type="submit"
+                  className="bg-sky-700 w-full mt-2 hover:bg-sky-800 transition-colors duration-200 text-white font-semibold py-2"
                 >
-                  Login
+                  Entrar
                 </Button>
               </div>
             </fieldset>
           </form>
         </CardContent>
-        <CardFooter />
+
+        <CardFooter className="text-center text-xs text-gray-400 pt-2">
+          © {new Date().getFullYear()} TaskFlow
+        </CardFooter>
       </Card>
     </div>
   );
