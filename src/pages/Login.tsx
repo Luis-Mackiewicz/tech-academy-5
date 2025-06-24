@@ -9,11 +9,32 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+type LoginForm = {
+  email: string;
+  senha: string;
+};
 
 export default function Login() {
   const navigate = useNavigate();
   const goToRegistration = () => {
     navigate("register");
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>({
+    defaultValues: {
+      email: "",
+      senha: "",
+    },
+  });
+
+  const onSubmit = (data: LoginForm) => {
+    alert("Login realizado com sucesso!");
   };
 
   return (
@@ -34,7 +55,7 @@ export default function Login() {
         </CardHeader>
 
         <CardContent>
-          <form action="" className="w-full">
+          <form className="w-full" onSubmit={handleSubmit(onSubmit)} noValidate>
             <fieldset className="flex flex-col gap-4">
               <legend className="font-semibold text-sky-800 mb-2">
                 Preencha os campos:
@@ -49,12 +70,22 @@ export default function Login() {
                 </label>
                 <Input
                   id="email"
-                  name="email"
                   placeholder="Digite seu e-mail"
                   type="email"
                   autoComplete="email"
-                  required
+                  {...register("email", {
+                    required: "E-mail é obrigatório",
+                    pattern: {
+                      value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      message: "E-mail inválido",
+                    },
+                  })}
                 />
+                {errors.email && (
+                  <span className="text-xs text-red-500">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-full">
@@ -66,12 +97,23 @@ export default function Login() {
                 </label>
                 <Input
                   id="senha"
-                  name="senha"
                   placeholder="Digite a sua senha"
                   type="password"
                   autoComplete="current-password"
-                  required
+                  {...register("senha", {
+                    required: "Senha é obrigatória",
+                    pattern: {
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                      message:
+                        "A senha deve ter pelo menos 8 caracteres e conter letras e números.",
+                    },
+                  })}
                 />
+                {errors.senha && (
+                  <span className="text-xs text-red-500">
+                    {errors.senha.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-full">
