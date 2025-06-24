@@ -50,11 +50,15 @@ export default function CreateNewProject() {
       setError("imagem", { message: "A imagem do projeto é obrigatória." });
       return;
     }
-    console.log("Projeto criado:", {
+    const projetosSalvos = JSON.parse(localStorage.getItem("projetos") || "[]");
+    const novoProjeto = {
       nome: data.nome,
       descricao: data.descricao,
-      imagem: data.imagem[0],
-    });
+      imagem: preview,
+    };
+    projetosSalvos.push(novoProjeto);
+    localStorage.setItem("projetos", JSON.stringify(projetosSalvos));
+    navigate("/projects");
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
