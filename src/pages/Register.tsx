@@ -18,22 +18,33 @@ export default function Register() {
 
   return (
     <div className="bg-gradient-to-t from-sky-400 to-sky-700 h-screen w-screen flex justify-center items-center">
-      <Card className="h-[70vh] w-[30vw] shadow-2xl border-black bg-white">
-        <CardHeader>
-          <CardTitle className="font-black text-sky-900">Registrar</CardTitle>
+      <Card className="h-auto w-[90%] max-w-md p-6 shadow-2xl border border-gray-300 bg-white rounded-2xl">
+        <CardHeader className="text-center mb-4">
+          <CardTitle className="font-black text-3xl text-sky-900 mr-auto">
+            Registrar
+          </CardTitle>
           <CardAction>
-            <p onClick={goToLogin} className="cursor-pointer opacity-60">
-              <strong>Login</strong>
+            <p
+              onClick={goToLogin}
+              className="cursor-pointer text-sm text-sky-600 hover:text-sky-800 transition-colors duration-200"
+            >
+              Já tem uma conta? <strong>Login</strong>
             </p>
           </CardAction>
         </CardHeader>
-        <CardContent className="flex flex-1 items-center justify-center">
-          <form action="" className="w-full">
-            <fieldset className="flex flex-col items-center gap-4 w-full">
-              <legend className="font-bold">Preencha os campos:</legend>
 
-              <div className="w-full px-4">
-                <label htmlFor="nome" className="block text-sm font-semibold">
+        <CardContent>
+          <form action="" className="w-full">
+            <fieldset className="flex flex-col gap-4">
+              <legend className="font-semibold text-sky-800 mb-2">
+                Preencha os campos:
+              </legend>
+
+              <div className="w-full">
+                <label
+                  htmlFor="nome"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Nome completo
                 </label>
                 <Input
@@ -46,8 +57,11 @@ export default function Register() {
                 />
               </div>
 
-              <div className="w-full px-4">
-                <label htmlFor="email" className="block text-sm font-semibold">
+              <div className="w-full">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   E-mail
                 </label>
                 <Input
@@ -60,8 +74,11 @@ export default function Register() {
                 />
               </div>
 
-              <div className="w-full px-4">
-                <label htmlFor="senha" className="block text-sm font-semibold">
+              <div className="w-full">
+                <label
+                  htmlFor="senha"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Senha
                 </label>
                 <Input
@@ -74,8 +91,11 @@ export default function Register() {
                 />
               </div>
 
-              <div className="w-full px-4">
-                <label htmlFor="cpf" className="block text-sm font-semibold">
+              <div className="w-full">
+                <label
+                  htmlFor="cpf"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   CPF
                 </label>
                 <Input
@@ -88,9 +108,9 @@ export default function Register() {
                 />
               </div>
 
-              <div className="w-full px-4">
+              <div className="w-full">
                 <Button
-                  className="bg-sky-700 w-full cursor-pointer hover:bg-green-400"
+                  className="bg-sky-700 w-full mt-2 hover:bg-sky-800 transition-colors duration-200 text-white font-semibold py-2"
                   type="submit"
                 >
                   Registrar
@@ -99,7 +119,10 @@ export default function Register() {
             </fieldset>
           </form>
         </CardContent>
-        <CardFooter />
+
+        <CardFooter className="text-center text-xs text-gray-400 pt-2">
+          © {new Date().getFullYear()} TaskFlow
+        </CardFooter>
       </Card>
     </div>
   );
