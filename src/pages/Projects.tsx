@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
+import ProjectCard from "@/components/ui/projectCard";
 
 export default function Projects() {
   const navigate = useNavigate();
@@ -19,7 +20,13 @@ export default function Projects() {
     navigate("/create-new-project");
   };
 
-  const plusIcon = "/public/plus.svg";
+  const projetos: Array<{
+    nome: string;
+    descricao: string;
+    imagem: string;
+  }> = JSON.parse(localStorage.getItem("projetos") || "[]");
+
+  const plusIcon = "/plus.svg";
   const arrowLeftIcon = "/public/arrow-left.svg";
   const arrowRightIcon = "/public/arrow-right.svg";
   return (
@@ -43,7 +50,24 @@ export default function Projects() {
             </Button>
           </CardAction>
         </CardHeader>
-        <CardContent></CardContent>
+        <CardContent>
+          <div className="flex flex-wrap gap-6 w-full h-full items-center justify-center">
+            {projetos.length === 0 ? (
+              <span className="text-gray-500 text-center w-full mt-[15%]">
+                Nenhum projeto cadastrado.
+              </span>
+            ) : (
+              projetos.map((proj, idx) => (
+                <ProjectCard
+                  key={idx}
+                  nome={proj.nome}
+                  descricao={proj.descricao}
+                  imagem={proj.imagem}
+                />
+              ))
+            )}
+          </div>
+        </CardContent>
         <CardFooter className=" flex self-end gap-4 mt-auto">
           <Button className="bg-sky-500 hover:bg-teal-500 cursor-pointer">
             <img src={arrowLeftIcon} alt="back" />
