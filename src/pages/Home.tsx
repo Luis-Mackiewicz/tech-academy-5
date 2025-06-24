@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/ui/header";
 
 export default function Home() {
   const kanbanImage = "/public/kanban.png";
