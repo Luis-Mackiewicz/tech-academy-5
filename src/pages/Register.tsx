@@ -10,16 +10,37 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+
+type RegisterForm = {
+  nome: string;
+  email: string;
+  senha: string;
+  confirmSenha: string;
+  cpf: string;
+};
 
 export default function Register() {
   const navigate = useNavigate();
-  const [nome, setNome] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const goToLogin = () => {
-    navigate("/");
-  };
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<RegisterForm>({
+    defaultValues: {
+      nome: "",
+      email: "",
+      senha: "",
+      confirmSenha: "",
+      cpf: "",
+    },
+  });
+
+  const nome = watch("nome");
 
   const dicebearURL = `https://api.dicebear.com/8.x/bottts/svg?seed=${encodeURIComponent(
     nome || "TaskFlowUser"
@@ -39,6 +60,15 @@ export default function Register() {
     ? URL.createObjectURL(avatarFile)
     : dicebearURL;
 
+  const goToLogin = () => {
+    navigate("/");
+  };
+
+  const onSubmit = (data: RegisterForm) => {
+    alert("Cadastro realizado com sucesso!");
+    navigate("/");
+  };
+
   return (
     <div className="bg-gradient-to-t from-sky-400 to-sky-700 h-screen w-screen flex justify-center items-center">
       <Card className="h-auto w-[90%] max-w-md p-6 shadow-2xl border border-gray-300 bg-white rounded-2xl">
@@ -57,7 +87,7 @@ export default function Register() {
         </CardHeader>
 
         <CardContent>
-          <form className="w-full">
+          <form className="w-full" onSubmit={handleSubmit(onSubmit)} noValidate>
             <fieldset className="flex flex-col gap-4">
               <div className="w-full flex justify-center">
                 <img
@@ -76,7 +106,6 @@ export default function Register() {
                 />
               </div>
 
-              {/* Campos do formulário */}
               <div className="w-full">
                 <label
                   htmlFor="nome"
@@ -86,14 +115,26 @@ export default function Register() {
                 </label>
                 <Input
                   id="nome"
-                  name="nome"
                   placeholder="Digite seu nome"
                   type="text"
                   autoComplete="name"
-                  required
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
+                  {...register("nome", {
+                    required: "Nome é obrigatório",
+                    minLength: {
+                      value: 3,
+                      message: "Nome deve ter pelo menos 3 caracteres",
+                    },
+                    pattern: {
+                      value: /^[A-Za-zÀ-ÿ\s]+$/,
+                      message: "Nome deve conter apenas letras",
+                    },
+                  })}
                 />
+                {errors.nome && (
+                  <span className="text-xs text-red-500">
+                    {errors.nome.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-full">
@@ -105,12 +146,22 @@ export default function Register() {
                 </label>
                 <Input
                   id="email"
-                  name="email"
                   placeholder="Digite seu email"
                   type="email"
                   autoComplete="email"
-                  required
+                  {...register("email", {
+                    required: "E-mail é obrigatório",
+                    pattern: {
+                      value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      message: "E-mail inválido",
+                    },
+                  })}
                 />
+                {errors.email && (
+                  <span className="text-xs text-red-500">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-full">
@@ -122,12 +173,48 @@ export default function Register() {
                 </label>
                 <Input
                   id="senha"
-                  name="senha"
                   placeholder="Digite sua senha"
                   type="password"
                   autoComplete="new-password"
-                  required
+                  {...register("senha", {
+                    required: "Senha é obrigatória",
+                    pattern: {
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                      message:
+                        "A senha deve ter pelo menos 8 caracteres e conter letras e números.",
+                    },
+                  })}
                 />
+                {errors.senha && (
+                  <span className="text-xs text-red-500">
+                    {errors.senha.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="w-full">
+                <label
+                  htmlFor="confirmSenha"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Confirmar senha
+                </label>
+                <Input
+                  id="confirmSenha"
+                  placeholder="Confirme sua senha"
+                  type="password"
+                  autoComplete="new-password"
+                  {...register("confirmSenha", {
+                    required: "Confirmação de senha é obrigatória",
+                    validate: (value) =>
+                      value === watch("senha") || "As senhas não coincidem.",
+                  })}
+                />
+                {errors.confirmSenha && (
+                  <span className="text-xs text-red-500">
+                    {errors.confirmSenha.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-full">
@@ -139,12 +226,22 @@ export default function Register() {
                 </label>
                 <Input
                   id="cpf"
-                  name="cpf"
                   placeholder="Digite seu CPF"
                   type="text"
                   autoComplete="off"
-                  required
+                  {...register("cpf", {
+                    required: "CPF é obrigatório",
+                    pattern: {
+                      value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
+                      message: "CPF deve estar no formato 000.000.000-00",
+                    },
+                  })}
                 />
+                {errors.cpf && (
+                  <span className="text-xs text-red-500">
+                    {errors.cpf.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-full">
