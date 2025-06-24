@@ -17,34 +17,90 @@ export default function Register() {
   };
 
   return (
-    <>
-      <div className="bg-gradient-to-t from-sky-400  to-sky-700 h-screen w-screen flex justify-center items-center">
-        <Card className="h-[60vh] w-[30vw] shadow-2xl border-black bg-white">
-          <CardHeader>
-            <CardTitle className="font-black text-sky-900">Registrar</CardTitle>
-            <CardAction>
-              <p onClick={goToLogin} className="cursor-pointer opacity-60">
-                <strong>Login</strong>
-              </p>
-            </CardAction>
-          </CardHeader>
-          <CardContent className="flex flex-1 items-center justify-center">
-            <form action="" className="w-full">
-              <fieldset className="flex flex-col items-center gap-4 w-full">
-                <legend className="font-bold">Preencha os campos:</legend>
-                <Input placeholder="Digite seu nome" type="text" />
-                <Input placeholder="Digite seu email" type="email" />
-                <Input placeholder="Digite sua senha" type="password" />
-                <Input placeholder="Digite seu CPF" type="text" />
-                <Button className="bg-sky-700  w-[100%] cursor-pointer hover:bg-green-400">
+    <div className="bg-gradient-to-t from-sky-400 to-sky-700 h-screen w-screen flex justify-center items-center">
+      <Card className="h-[70vh] w-[30vw] shadow-2xl border-black bg-white">
+        <CardHeader>
+          <CardTitle className="font-black text-sky-900">Registrar</CardTitle>
+          <CardAction>
+            <p onClick={goToLogin} className="cursor-pointer opacity-60">
+              <strong>Login</strong>
+            </p>
+          </CardAction>
+        </CardHeader>
+        <CardContent className="flex flex-1 items-center justify-center">
+          <form action="" className="w-full">
+            <fieldset className="flex flex-col items-center gap-4 w-full">
+              <legend className="font-bold">Preencha os campos:</legend>
+
+              <div className="w-full px-4">
+                <label htmlFor="nome" className="block text-sm font-semibold">
+                  Nome completo
+                </label>
+                <Input
+                  id="nome"
+                  name="nome"
+                  placeholder="Digite seu nome"
+                  type="text"
+                  autoComplete="name"
+                  required
+                />
+              </div>
+
+              <div className="w-full px-4">
+                <label htmlFor="email" className="block text-sm font-semibold">
+                  E-mail
+                </label>
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="Digite seu email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                />
+              </div>
+
+              <div className="w-full px-4">
+                <label htmlFor="senha" className="block text-sm font-semibold">
+                  Senha
+                </label>
+                <Input
+                  id="senha"
+                  name="senha"
+                  placeholder="Digite sua senha"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                />
+              </div>
+
+              <div className="w-full px-4">
+                <label htmlFor="cpf" className="block text-sm font-semibold">
+                  CPF
+                </label>
+                <Input
+                  id="cpf"
+                  name="cpf"
+                  placeholder="Digite seu CPF"
+                  type="text"
+                  autoComplete="off"
+                  required
+                />
+              </div>
+
+              <div className="w-full px-4">
+                <Button
+                  className="bg-sky-700 w-full cursor-pointer hover:bg-green-400"
+                  type="submit"
+                >
                   Registrar
                 </Button>
-              </fieldset>
-            </form>
-          </CardContent>
-          <CardFooter></CardFooter>
-        </Card>
-      </div>
-    </>
+              </div>
+            </fieldset>
+          </form>
+        </CardContent>
+        <CardFooter />
+      </Card>
+    </div>
   );
 }
