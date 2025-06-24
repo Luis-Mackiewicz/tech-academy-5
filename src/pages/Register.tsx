@@ -9,12 +9,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
 
 export default function Register() {
   const navigate = useNavigate();
+  const [nome, setNome] = useState("");
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const goToLogin = () => {
     navigate("/");
   };
+
+  const dicebearURL = `https://api.dicebear.com/8.x/bottts/svg?seed=${encodeURIComponent(
+    nome || "TaskFlowUser"
+  )}`;
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setAvatarFile(e.target.files[0]);
+    }
+  };
+
+  const avatarPreview = avatarFile
+    ? URL.createObjectURL(avatarFile)
+    : dicebearURL;
 
   return (
     <div className="bg-gradient-to-t from-sky-400 to-sky-700 h-screen w-screen flex justify-center items-center">
@@ -34,12 +57,26 @@ export default function Register() {
         </CardHeader>
 
         <CardContent>
-          <form action="" className="w-full" encType="multipart/form-data">
+          <form className="w-full">
             <fieldset className="flex flex-col gap-4">
-              <legend className="font-semibold text-sky-800 mb-2">
-                Preencha os campos:
-              </legend>
+              <div className="w-full flex justify-center">
+                <img
+                  src={avatarPreview}
+                  alt="Avatar de perfil"
+                  onClick={handleAvatarClick}
+                  className="w-24 h-24 rounded-full border-2 border-gray-300 object-cover shadow-md cursor-pointer hover:scale-105 transition-transform duration-200"
+                  title="Clique para escolher uma imagem personalizada"
+                />
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+              </div>
 
+              {/* Campos do formulário */}
               <div className="w-full">
                 <label
                   htmlFor="nome"
@@ -54,6 +91,8 @@ export default function Register() {
                   type="text"
                   autoComplete="name"
                   required
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
                 />
               </div>
 
@@ -109,25 +148,8 @@ export default function Register() {
               </div>
 
               <div className="w-full">
-                <label
-                  htmlFor="fotoPerfil"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Foto de perfil <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="fotoPerfil"
-                  name="fotoPerfil"
-                  type="file"
-                  accept="image/*"
-                  required
-                  className="w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-sky-700 file:text-white hover:file:bg-sky-800 transition-all duration-200"
-                />
-              </div>
-
-              <div className="w-full">
                 <Button
-                  className="bg-sky-700 w-full mt-2 hover:bg-sky-800 transition-colors duration-200 text-white font-semibold py-2"
+                  className="bg-sky-700 w-full mt-2 hover:bg-sky-800 transition-colors duration-200 text-white font-semibold py-2 cursor-pointer"
                   type="submit"
                 >
                   Registrar
