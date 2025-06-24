@@ -35,8 +35,8 @@ export default function Login() {
             <form action="" className="w-full">
               <fieldset className="flex flex-col items-center gap-4 w-full">
                 <legend className="font-bold">Preencha os campos:</legend>
-                <Input placeholder="Digite seu nome" type="text" />
-                <Input placeholder="Digite seu email" type="email" />
+                <Input placeholder="Digite seu e-mail" type="email" />
+                <Input placeholder="Digite a sua senha" type="password" />
 
                 <Button className="bg-sky-700  w-[100%] cursor-pointer hover:bg-green-400">
                   Login
