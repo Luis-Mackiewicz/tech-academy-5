@@ -34,7 +34,7 @@ export default function Register() {
         </CardHeader>
 
         <CardContent>
-          <form action="" className="w-full">
+          <form action="" className="w-full" encType="multipart/form-data">
             <fieldset className="flex flex-col gap-4">
               <legend className="font-semibold text-sky-800 mb-2">
                 Preencha os campos:
@@ -105,6 +105,23 @@ export default function Register() {
                   type="text"
                   autoComplete="off"
                   required
+                />
+              </div>
+
+              <div className="w-full">
+                <label
+                  htmlFor="fotoPerfil"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Foto de perfil <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="fotoPerfil"
+                  name="fotoPerfil"
+                  type="file"
+                  accept="image/*"
+                  required
+                  className="w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-sky-700 file:text-white hover:file:bg-sky-800 transition-all duration-200"
                 />
               </div>
 
