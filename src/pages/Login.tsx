@@ -17,36 +17,62 @@ export default function Login() {
   };
 
   return (
-    <>
-      <div className="bg-gradient-to-t from-sky-400  to-sky-700 h-screen w-screen flex justify-center items-center">
-        <Card className="h-[60vh] w-[30vw] shadow-2xl border-black bg-white">
-          <CardHeader>
-            <CardTitle className="font-black text-sky-900">Login</CardTitle>
-            <CardAction>
-              <p
-                onClick={goToRegistration}
-                className="cursor-pointer opacity-60"
-              >
-                <strong>Registrar</strong>
-              </p>
-            </CardAction>
-          </CardHeader>
-          <CardContent className="flex flex-1 items-center justify-center">
-            <form action="" className="w-full">
-              <fieldset className="flex flex-col items-center gap-4 w-full">
-                <legend className="font-bold">Preencha os campos:</legend>
-                <Input placeholder="Digite seu e-mail" type="email" />
-                <Input placeholder="Digite a sua senha" type="password" />
+    <div className="bg-gradient-to-t from-sky-400 to-sky-700 h-screen w-screen flex justify-center items-center">
+      <Card className="h-[60vh] w-[30vw] shadow-2xl border-black bg-white">
+        <CardHeader>
+          <CardTitle className="font-black text-sky-900">Login</CardTitle>
+          <CardAction>
+            <p onClick={goToRegistration} className="cursor-pointer opacity-60">
+              <strong>Registrar</strong>
+            </p>
+          </CardAction>
+        </CardHeader>
+        <CardContent className="flex flex-1 items-center justify-center">
+          <form action="" className="w-full">
+            <fieldset className="flex flex-col items-center gap-4 w-full">
+              <legend className="font-bold">Preencha os campos:</legend>
 
-                <Button className="bg-sky-700  w-[100%] cursor-pointer hover:bg-green-400">
+              <div className="w-full px-4">
+                <label htmlFor="email" className="block font-semibold text-sm">
+                  E-mail
+                </label>
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="Digite seu e-mail"
+                  type="email"
+                  autoComplete="email"
+                  required
+                />
+              </div>
+
+              <div className="w-full px-4">
+                <label htmlFor="senha" className="block font-semibold text-sm">
+                  Senha
+                </label>
+                <Input
+                  id="senha"
+                  name="senha"
+                  placeholder="Digite a sua senha"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                />
+              </div>
+
+              <div className="w-full px-4">
+                <Button
+                  className="bg-sky-700 w-full cursor-pointer hover:bg-green-400"
+                  type="submit"
+                >
                   Login
                 </Button>
-              </fieldset>
-            </form>
-          </CardContent>
-          <CardFooter></CardFooter>
-        </Card>
-      </div>
-    </>
+              </div>
+            </fieldset>
+          </form>
+        </CardContent>
+        <CardFooter />
+      </Card>
+    </div>
   );
 }
