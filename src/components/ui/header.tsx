@@ -19,7 +19,7 @@ export default function Header() {
     { label: "Projetos", path: "/projects" },
     { label: "Kanban", path: "/kanban" },
     { label: "Membros", path: "/membership" },
-    { label: "Tutorial", path: "/tutorial" },
+    { label: "Sobre", path: "/about" }, // Adicionado About
   ];
 
   useEffect(() => {
@@ -78,7 +78,6 @@ export default function Header() {
                   className="px-4 py-2 text-left hover:bg-red-300 rounded-b-xl cursor-pointer"
                   onClick={() => {
                     setMenuOpen(false);
-
                     navigate("/");
                   }}
                 >
