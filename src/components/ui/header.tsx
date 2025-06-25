@@ -8,15 +8,18 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLLIElement>(null);
 
-  const nome = "Nome do Usuário";
+  // Pegue o usuário do localStorage ou contexto futuramente
+  const nome = localStorage.getItem("nome") || "Nome do Usuário";
   const dicebearURL = `https://api.dicebear.com/8.x/bottts/svg?seed=${encodeURIComponent(
     nome || "TaskFlowUser"
   )}`;
 
   const navItems = [
     { label: "Home", path: "/home" },
-    { label: "Tutorial", path: "/tutorial" },
     { label: "Projetos", path: "/projects" },
+    { label: "Kanban", path: "/kanban" },
+    { label: "Membros", path: "/membership" },
+    { label: "Tutorial", path: "/tutorial" },
   ];
 
   useEffect(() => {
@@ -52,7 +55,6 @@ export default function Header() {
               {item.label}
             </li>
           ))}
-
           <li className="ml-auto relative" ref={menuRef}>
             <img
               src={dicebearURL}
@@ -76,6 +78,7 @@ export default function Header() {
                   className="px-4 py-2 text-left hover:bg-red-300 rounded-b-xl cursor-pointer"
                   onClick={() => {
                     setMenuOpen(false);
+
                     navigate("/");
                   }}
                 >
