@@ -29,7 +29,6 @@ export default function CreateNewProject() {
     setError,
     clearErrors,
     formState: { errors },
-    watch,
   } = useForm<ProjectForm>({
     defaultValues: {
       nome: "",
@@ -37,9 +36,6 @@ export default function CreateNewProject() {
       imagem: undefined,
     },
   });
-
-  const nome = watch("nome");
-  const imagem = watch("imagem");
 
   const backToProjectsPage = () => {
     navigate("/projects");
