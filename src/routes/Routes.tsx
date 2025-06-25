@@ -9,6 +9,8 @@ import Projects from "@/pages/Projects";
 import CreateNewProject from "@/pages/CreateNewProject";
 import Profile from "@/pages/Profile";
 import Kanban from "@/pages/kanban/Kanban";
+import Membership from "@/pages/kanban/Membership";
+import EditProject from "@/pages/kanban/EditProject";
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +51,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "membership",
-        element: <Kanban />,
+        element: <Membership />,
+      },
+      {
+        path: "edit-project/:id",
+        element: <EditProject />,
       },
     ],
   },
