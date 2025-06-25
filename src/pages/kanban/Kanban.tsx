@@ -80,9 +80,16 @@ export default function Kanban() {
 
   return (
     <main className="min-h-screen w-screen bg-gradient-to-t from-sky-400 to-sky-700 flex flex-col">
-      <header className="flex justify-between items-center p-6">
-        <Button onClick={() => navigate("/projects")}>Voltar</Button>
-        <div className="w-7 h-7 bg-white rounded-lg" />
+      <header className="flex justify-between items-center p-6 w-[60%] ml-auto mr-auto">
+        <Button
+          onClick={() => navigate("/projects")}
+          className="cursor-pointer bg-sky-950"
+        >
+          <img src="/public/arrow-left.svg" alt="back" />
+        </Button>
+        <Button className="bg-sky-950 cursor-pointer">
+          <img src="/public/config.svg" alt="config" />
+        </Button>
       </header>
 
       <section className="flex gap-6 p-6 mx-auto min-w-fit">
