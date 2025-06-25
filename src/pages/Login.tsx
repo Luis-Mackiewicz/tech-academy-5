@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { login } from "@/services/auth.service";
+import { useState } from "react";
 
 type LoginForm = {
   email: string;
@@ -18,6 +20,8 @@ type LoginForm = {
 
 export default function Login() {
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+
   const goToRegistration = () => {
     navigate("register");
   };
@@ -33,8 +37,17 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (data: LoginForm) => {
-    alert("Login realizado com sucesso!");
+  const onSubmit = async (data: LoginForm) => {
+    setError(null);
+    try {
+      await login({ email: data.email, password: data.senha });
+      navigate("/home");
+    } catch (err: any) {
+      setError(
+        err.response?.data?.error ||
+          "Erro ao fazer login. Verifique suas credenciais."
+      );
+    }
   };
 
   return (
@@ -115,6 +128,8 @@ export default function Login() {
                   </span>
                 )}
               </div>
+
+              {error && <span className="text-xs text-red-500">{error}</span>}
 
               <div className="w-full">
                 <Button
