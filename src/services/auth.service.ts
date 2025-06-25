@@ -1,4 +1,3 @@
-// Adicione esta interface no auth.service.ts
 interface RegisterData {
   name: string;
   email: string;
@@ -37,7 +36,6 @@ interface DecodedToken {
 export const login = async ({ email, password }: LoginData) => {
   const response = await api.post("/auth/login", { email, password });
   const token = response.data.token;
-
   localStorage.setItem("token", token);
   return token;
 };
