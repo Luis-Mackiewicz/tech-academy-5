@@ -38,17 +38,17 @@ export default function KanbanTaskCard({
         <div className="flex gap-2">
           <button
             onClick={onEdit}
-            className="text-gray-500 hover:text-blue-700"
+            className="text-gray-500 hover:text-blue-700 cursor-pointer"
             title="Editar tarefa"
           >
-            ✏️
+            <img src="/public/edit.svg" alt="lixeira" />
           </button>
           <button
             onClick={onDelete}
-            className="text-gray-500 hover:text-red-700"
+            className="text-gray-500 hover:text-red-700 cursor-pointer"
             title="Excluir tarefa"
           >
-            🗑️
+            <img src="/public/bin.svg" alt="lixeira" />
           </button>
         </div>
       </div>
@@ -59,10 +59,14 @@ export default function KanbanTaskCard({
         {canMoveLeft ? (
           <button
             onClick={onMoveLeft}
-            className="text-gray-500 hover:text-sky-700"
+            className="hover:text-sky-700 text-black cursor-pointer"
             title="Mover para a esquerda"
           >
-            ◀️
+            <img
+              src="/public/arrow-left.svg"
+              alt="mover para esquerda"
+              style={{ filter: "brightness(0) saturate(100%)" }}
+            />
           </button>
         ) : (
           <div />
@@ -70,10 +74,14 @@ export default function KanbanTaskCard({
         {canMoveRight && (
           <button
             onClick={onMoveRight}
-            className="text-gray-500 hover:text-sky-700"
+            className="hover:text-sky-700 text-black cursor-pointer"
             title="Mover para a direita"
           >
-            ▶️
+            <img
+              src="/public/arrow-right.svg"
+              alt="mover para direita"
+              style={{ filter: "brightness(0) saturate(100%)" }}
+            />
           </button>
         )}
       </div>
