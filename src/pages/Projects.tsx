@@ -63,6 +63,13 @@ export default function Projects() {
                   nome={proj.nome}
                   descricao={proj.descricao}
                   imagem={proj.imagem}
+                  onEdit={() => navigate(`/edit-project/${idx}`, { state: { index: idx } })}
+                  onDelete={() => {
+                    const projetos = JSON.parse(localStorage.getItem("projetos") || "[]");
+                    projetos.splice(idx, 1);
+                    localStorage.setItem("projetos", JSON.stringify(projetos));
+                    window.location.reload();
+                  }}
                 />
               ))
             )}
