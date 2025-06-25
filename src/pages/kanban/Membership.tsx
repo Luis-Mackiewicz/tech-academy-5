@@ -74,7 +74,11 @@ export default function Membership() {
             {mockMembers.map((member) => (
               <div
                 key={member.id}
-                className="flex items-center bg-sky-100 border border-sky-200 rounded-xl px-4 py-3 shadow-sm"
+                className={`flex items-center bg-sky-100 border border-sky-200 rounded-xl px-4 py-3 shadow-sm ${
+                  member.email === localStorage.getItem("email")
+                    ? "ring-2 ring-sky-500"
+                    : ""
+                }`}
               >
                 <img
                   src={`https://api.dicebear.com/8.x/bottts/svg?seed=${encodeURIComponent(
@@ -99,6 +103,11 @@ export default function Membership() {
                     </div>
                   )}
                 </div>
+                {member.email === localStorage.getItem("email") && (
+                  <span className="ml-2 text-xs text-sky-700 font-bold">
+                    (Você)
+                  </span>
+                )}
               </div>
             ))}
           </div>
