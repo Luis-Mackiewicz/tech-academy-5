@@ -12,6 +12,7 @@ type ProjectCardProps = {
   imagem: string;
   onEdit?: () => void;
   onDelete?: () => void;
+  onKanban?: () => void;
 };
 
 export default function ProjectCard({
@@ -20,6 +21,7 @@ export default function ProjectCard({
   imagem,
   onEdit,
   onDelete,
+  onKanban,
 }: ProjectCardProps) {
   return (
     <Card className="w-64 h-80 flex flex-col justify-between shadow-lg border border-gray-300 bg-white rounded-xl relative">
@@ -44,6 +46,11 @@ export default function ProjectCard({
         )}
         <CardDescription className="text-gray-700">{descricao}</CardDescription>
       </CardContent>
+      {onKanban && (
+        <button onClick={onKanban} title="Abrir Kanban">
+          <img src="/public/kanban.svg" alt="Kanban" />
+        </button>
+      )}
     </Card>
   );
 }
