@@ -8,6 +8,7 @@ import Tutorial from "@/pages/Tutorial";
 import Projects from "@/pages/Projects";
 import CreateNewProject from "@/pages/CreateNewProject";
 import Profile from "@/pages/Profile";
+import Kanban from "@/pages/kanban/Kanban";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,14 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "kanban",
+        element: <Kanban />,
+      },
+      {
+        path: "membership",
+        element: <Kanban />,
       },
     ],
   },
