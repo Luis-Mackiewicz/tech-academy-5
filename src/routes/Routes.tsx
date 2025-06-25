@@ -4,7 +4,7 @@ import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
 import Register from "@/pages/Register";
 import Home from "@/pages/Home";
-import Tutorial from "@/pages/Tutorial";
+import About from "@/pages/About";
 import Projects from "@/pages/Projects";
 import CreateNewProject from "@/pages/CreateNewProject";
 import Profile from "@/pages/Profile";
@@ -30,8 +30,8 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "tutorial",
-        element: <Tutorial />,
+        path: "about",
+        element: <About />,
       },
       {
         path: "projects",
