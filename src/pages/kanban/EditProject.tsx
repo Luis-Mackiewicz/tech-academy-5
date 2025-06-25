@@ -32,6 +32,7 @@ export default function EditProject() {
     clearErrors,
     formState: { errors },
     reset,
+    watch,
   } = useForm<ProjectForm>({
     defaultValues: {
       nome: "",
@@ -90,7 +91,8 @@ export default function EditProject() {
       <Card className="h-auto w-[90%] max-w-2xl border border-black p-6 rounded-xl shadow-xl bg-white">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-sky-900">
-            Editar Projeto
+            Editar Projeto:{" "}
+            <span className="text-sky-700">{watch("nome")}</span>
           </CardTitle>
           <CardDescription className="text-sm text-gray-600">
             Altere os dados do seu projeto e salve as alterações.
