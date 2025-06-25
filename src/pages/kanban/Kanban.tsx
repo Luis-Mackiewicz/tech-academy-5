@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import KanbanTable from "./KanbanTable";
 import KanbanTaskCard from "./KanbanTaskCard";
 
@@ -8,6 +8,7 @@ export type Task = {
   id: number;
   titulo: string;
   descricao: string;
+  responsavel: string;
 };
 
 export type KanbanState = {
@@ -18,21 +19,32 @@ export type KanbanState = {
 
 export default function Kanban() {
   const navigate = useNavigate();
-  const [tasks, setTasks] = useState<KanbanState>({
-    todo: [],
-    doing: [],
-    done: [],
+  const { projectId } = useParams();
+  const [tasks, setTasks] = useState<KanbanState>(() => {
+    const saved = localStorage.getItem(`kanbanTasks_${projectId}`);
+    return saved ? JSON.parse(saved) : { todo: [], doing: [], done: [] };
   });
 
+  useEffect(() => {
+    localStorage.setItem(`kanbanTasks_${projectId}`, JSON.stringify(tasks));
+  }, [tasks, projectId]);
+
   const addTask = (col: keyof KanbanState) => {
+    const members = JSON.parse(
+      localStorage.getItem(`projectMembers_${projectId}`) || "[]"
+    );
     const titulo = prompt("Título da tarefa:");
     const descricao = prompt("Descrição da tarefa:");
-    if (titulo) {
+    const responsavel = prompt(
+      "Responsável (email):",
+      members[0]?.email || ""
+    );
+    if (titulo && responsavel) {
       setTasks((prev) => ({
         ...prev,
         [col]: [
           ...prev[col],
-          { id: Date.now(), titulo, descricao: descricao || "" },
+          { id: Date.now(), titulo, descricao: descricao || "", responsavel },
         ],
       }));
     }
