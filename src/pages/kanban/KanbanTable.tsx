@@ -37,7 +37,7 @@ export default function KanbanTable({
         {onAddTask && (
           <button
             onClick={onAddTask}
-            className="bg-sky-500 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-sky-700"
+            className="bg-sky-500 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-sky-700 cursor-pointer"
             title="Adicionar tarefa"
           >
             +
