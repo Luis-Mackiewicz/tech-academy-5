@@ -4,13 +4,13 @@ import { useNavigate } from "react-router";
 import KanbanTable from "./KanbanTable";
 import KanbanTaskCard from "./KanbanTaskCard";
 
-type Task = {
+export type Task = {
   id: number;
   titulo: string;
   descricao: string;
 };
 
-type KanbanState = {
+export type KanbanState = {
   todo: Task[];
   doing: Task[];
   done: Task[];
@@ -24,7 +24,6 @@ export default function Kanban() {
     done: [],
   });
 
-  // Função para adicionar uma task (exemplo simples)
   const addTask = (col: keyof KanbanState) => {
     const titulo = prompt("Título da tarefa:");
     const descricao = prompt("Descrição da tarefa:");
@@ -39,7 +38,6 @@ export default function Kanban() {
     }
   };
 
-  // Função para remover uma task
   const removeTask = (col: keyof KanbanState, id: number) => {
     setTasks((prev) => ({
       ...prev,
@@ -47,7 +45,6 @@ export default function Kanban() {
     }));
   };
 
-  // Função para editar uma task
   const editTask = (col: keyof KanbanState, id: number) => {
     const titulo = prompt("Novo título:");
     const descricao = prompt("Nova descrição:");
@@ -55,23 +52,40 @@ export default function Kanban() {
       ...prev,
       [col]: prev[col].map((task) =>
         task.id === id
-          ? { ...task, titulo: titulo || task.titulo, descricao: descricao || task.descricao }
+          ? {
+              ...task,
+              titulo: titulo || task.titulo,
+              descricao: descricao || task.descricao,
+            }
           : task
       ),
     }));
   };
 
-  const configurationIcon = "/public/config.svg";
+  const moveTask = (
+    from: keyof KanbanState,
+    to: keyof KanbanState,
+    id: number
+  ) => {
+    setTasks((prev) => {
+      const taskToMove = prev[from].find((t) => t.id === id);
+      if (!taskToMove) return prev;
+      return {
+        ...prev,
+        [from]: prev[from].filter((t) => t.id !== id),
+        [to]: [...prev[to], taskToMove],
+      };
+    });
+  };
 
   return (
-    <main className="h-screen w-screen bg-gradient-to-t from-sky-400 to-sky-700 flex flex-col">
+    <main className="min-h-screen w-screen bg-gradient-to-t from-sky-400 to-sky-700 flex flex-col">
       <header className="flex justify-between items-center p-6">
         <Button onClick={() => navigate("/projects")}>Voltar</Button>
-        <Button>
-          <img src={configurationIcon} alt="config" />
-        </Button>
+        <div className="w-7 h-7 bg-white rounded-lg" />
       </header>
-      <section className="flex-1 flex flex-row gap-8 justify-center items-start p-8 overflow-x-auto">
+
+      <section className="flex gap-6 p-6 mx-auto min-w-fit">
         <KanbanTable
           title="To Do"
           color="border-sky-500"
@@ -84,9 +98,12 @@ export default function Kanban() {
               descricao={task.descricao}
               onEdit={() => editTask("todo", task.id)}
               onDelete={() => removeTask("todo", task.id)}
+              onMoveRight={() => moveTask("todo", "doing", task.id)}
+              canMoveRight
             />
           ))}
         </KanbanTable>
+
         <KanbanTable
           title="Doing"
           color="border-yellow-400"
@@ -99,9 +116,14 @@ export default function Kanban() {
               descricao={task.descricao}
               onEdit={() => editTask("doing", task.id)}
               onDelete={() => removeTask("doing", task.id)}
+              onMoveLeft={() => moveTask("doing", "todo", task.id)}
+              onMoveRight={() => moveTask("doing", "done", task.id)}
+              canMoveLeft
+              canMoveRight
             />
           ))}
         </KanbanTable>
+
         <KanbanTable
           title="Done"
           color="border-green-500"
@@ -114,6 +136,8 @@ export default function Kanban() {
               descricao={task.descricao}
               onEdit={() => editTask("done", task.id)}
               onDelete={() => removeTask("done", task.id)}
+              onMoveLeft={() => moveTask("done", "doing", task.id)}
+              canMoveLeft
             />
           ))}
         </KanbanTable>
