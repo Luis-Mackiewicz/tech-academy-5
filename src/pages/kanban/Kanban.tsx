@@ -90,6 +90,12 @@ export default function Kanban() {
         <Button className="bg-sky-950 cursor-pointer">
           <img src="/public/config.svg" alt="config" />
         </Button>
+        <Button
+          onClick={() => navigate("/membership")}
+          className="bg-sky-500 hover:bg-sky-700 text-white text-xs px-3 py-1 ml-2"
+        >
+          Ver membros
+        </Button>
       </header>
 
       <section className="flex gap-6 p-6 mx-auto min-w-fit">
