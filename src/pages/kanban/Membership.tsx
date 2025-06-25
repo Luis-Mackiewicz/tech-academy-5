@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
 
 type Member = {
   id: number;
@@ -40,6 +41,8 @@ const mockMembers: Member[] = [
 const groupInviteLink = "https://seuprojeto.com/invite/kanban123";
 
 export default function Membership() {
+  const navigate = useNavigate();
+
   return (
     <main className="flex flex-col min-h-screen bg-gradient-to-t from-sky-400 to-sky-700 items-center justify-center">
       <Card className="w-[90vw] max-w-3xl bg-white border border-gray-300 rounded-2xl shadow-2xl p-6">
@@ -96,7 +99,7 @@ export default function Membership() {
                       {member.role}
                     </span>
                   </div>
-                  <span className="text-xs text-gray-500">{member.email}</span>
+                  <div className="text-xs text-gray-500">{member.email}</div>
                   {member.note && (
                     <div className="text-xs text-gray-700 mt-1 italic">
                       {member.note}
@@ -108,8 +111,23 @@ export default function Membership() {
                     (Você)
                   </span>
                 )}
+                <Button
+                  className="ml-4 bg-sky-600 hover:bg-sky-800 text-white text-xs px-4 py-2 rounded-lg shadow transition-all duration-200"
+                  onClick={() => alert(`Visualizar perfil de ${member.nome}`)}
+                  title="Visualizar perfil"
+                >
+                  Ver perfil
+                </Button>
               </div>
             ))}
+          </div>
+          <div className="flex justify-center mt-8">
+            <Button
+              className="bg-blue-600 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-xl shadow transition-all duration-200"
+              onClick={() => navigate(-1)}
+            >
+              Voltar
+            </Button>
           </div>
         </CardContent>
       </Card>
