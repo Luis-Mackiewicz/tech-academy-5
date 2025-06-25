@@ -10,6 +10,7 @@ export type KanbanTaskCardProps = {
   canMoveLeft?: boolean;
   canMoveRight?: boolean;
   draggableProps?: React.HTMLAttributes<HTMLDivElement>;
+  responsavel?: string; // email ou nome
 };
 
 export default function KanbanTaskCard({
@@ -22,6 +23,7 @@ export default function KanbanTaskCard({
   canMoveLeft,
   canMoveRight,
   draggableProps,
+  responsavel,
 }: KanbanTaskCardProps) {
   return (
     <div
@@ -55,6 +57,16 @@ export default function KanbanTaskCard({
       <p className="text-xs text-gray-600 break-words whitespace-pre-wrap">
         {descricao}
       </p>
+      <div className="flex items-center gap-2 mt-2">
+        <img
+          src={`https://api.dicebear.com/8.x/bottts/svg?seed=${encodeURIComponent(
+            responsavel || ""
+          )}`}
+          alt={responsavel}
+          className="w-6 h-6 rounded-full border border-sky-300"
+        />
+        <span className="text-xs text-sky-800">{responsavel}</span>
+      </div>
       <div className="flex justify-between mt-auto">
         {canMoveLeft ? (
           <button
